@@ -1,37 +1,21 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
-import style from "./App.module.scss";
-import { api } from "./services/api";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-type User = {
-  id: number;
-  userId: number;
-  title: string;
-  completed: boolean;
-};
+import { AuthGuard } from "./middleware/AuthGuard";
 
-function App() {
-  const [users, setUsers] = useState<User[]>([]);
+import { NotFound } from "./pages/NotFound/";
+import { Login } from "./pages/Login";
+import { Home } from "./pages/Home";
 
-  useEffect(() => {
-    async function loadUsers() {
-      const response = await api.get<User[]>("/todos");
-
-      setUsers(response.data);
-    }
-
-    loadUsers();
-  }, []);
-
-  return (
-    <main className={style.contentWrapper}>
-      {users.map((user) => (
-        <div key={user.id}>
-          {user.userId} - {user.title}
-        </div>
-      ))}
-    </main>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <AuthGuard exact path="/" authRouter={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="*" component={NotFound} />
+    </Switch>
+  </BrowserRouter>
+);
 
 export { App };
