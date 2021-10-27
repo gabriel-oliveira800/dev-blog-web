@@ -1,4 +1,5 @@
 abstract class Strings {
+  static token = "@application:session";
   static splitGitHubCode = "?code=";
   static redirectLinkToLoginWithGitHub = `https://github.com/login/oauth/authorize?scope=user&client_id=${
     import.meta.env.VITE_GITHUB_CLIENT_ID

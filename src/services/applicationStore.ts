@@ -6,12 +6,21 @@ interface AuthStore {
 }
 
 abstract class ApplicationStore {
-  saveToken({ key, token }: AuthStore) {
+  static saveToken({ key, token }: AuthStore) {
     localStorage.setItem(key, token);
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
-  removeToken({ key }: AuthStore) {
+  static getToken(key: string): string | null {
+    return localStorage.getItem(key);
+  }
+
+  static isAuthenticated(key: string): boolean {
+    const token = this.getToken(key);
+    return token !== null;
+  }
+
+  static removeToken(key: string) {
     localStorage.removeItem(key);
     api.defaults.headers.common["Authorization"] = "";
   }

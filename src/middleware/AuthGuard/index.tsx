@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 
-//Todo: add auth check
-const isAuthenticated = false;
+import { ApplicationStore } from "../../services";
+import { AppRoutes, Strings } from "../../values";
 
 interface AuthGuardProps extends RouteProps {
   authRouter: React.FC;
@@ -10,7 +10,11 @@ interface AuthGuardProps extends RouteProps {
 
 const AuthGuard = ({ authRouter, ...rest }: AuthGuardProps) => (
   <Route {...rest}>
-    {isAuthenticated ? authRouter : <Redirect to="/login" />}
+    {ApplicationStore.isAuthenticated(Strings.token) ? (
+      authRouter
+    ) : (
+      <Redirect to="/login" />
+    )}
   </Route>
 );
 
