@@ -22,7 +22,6 @@
 
       text-align: center;
       color: var(--gray3-color);
-      font-family: "Baloo 2", sans-serif;
 
       display: flex;
       align-items: center;
@@ -33,12 +32,14 @@
         font-size: 100px;
         line-height: 87px;
         font-weight: 800;
+        font-family: "Baloo 2", cursive;
       }
 
       p {
         font-size: 80px;
         font-weight: 700;
         line-height: 94px;
+        font-family: "Baloo 2", cursive;
       }
     }
   }

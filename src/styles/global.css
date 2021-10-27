@@ -14,6 +14,12 @@
   --gray4-color: #29292e;
 
   --white-color: #ffffff;
+
+  --gradient-color: linear-gradient(
+    100deg,
+    var(--pink-color) 0%,
+    var(--yellow-color) 100%
+  );
 }
 
 * {
@@ -21,7 +27,6 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
-  font-family: "Baloo 2", cursive;
 }
 
 body {
