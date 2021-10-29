@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 
-import { ApplicationStore } from "../../services";
+import { ApplicationStore } from "../../services/applicationStore";
 import { AppRoutes, Strings } from "../../values";
 
-interface AuthGuardProps extends RouteProps {
-  authRouter: React.FC;
-}
+interface AuthGuardProps extends RouteProps {}
 
-const AuthGuard = ({ authRouter, ...rest }: AuthGuardProps) => (
-  <Route {...rest}>
-    {ApplicationStore.isAuthenticated(Strings.token) ? (
-      authRouter
-    ) : (
-      <Redirect to="/login" />
-    )}
-  </Route>
-);
+const AuthGuard: React.FC<AuthGuardProps> = ({ location, ...rest }) => {
+  const isAuthenticated = ApplicationStore.isAuthenticated(Strings.token);
+
+  if (!isAuthenticated) {
+    return (
+      <Redirect to={{ pathname: AppRoutes.login, state: { from: location } }} />
+    );
+  }
+
+  return <Route {...rest} />;
+};
 
 export { AuthGuard };

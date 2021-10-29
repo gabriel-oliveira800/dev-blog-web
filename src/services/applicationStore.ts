@@ -1,5 +1,3 @@
-import { api } from ".";
-
 interface AuthStore {
   key: string;
   token: string;
@@ -8,7 +6,6 @@ interface AuthStore {
 abstract class ApplicationStore {
   static saveToken({ key, token }: AuthStore) {
     localStorage.setItem(key, token);
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
   static getToken(key: string): string | null {
@@ -22,7 +19,6 @@ abstract class ApplicationStore {
 
   static removeToken(key: string) {
     localStorage.removeItem(key);
-    api.defaults.headers.common["Authorization"] = "";
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import style from "./login.module.scss";
 
@@ -9,17 +9,26 @@ import { api } from "../../services/api";
 import { AppRoutes, Strings } from "../../values";
 import { Logo, Loading } from "../components";
 
-import {
-  LastestPostData,
-  LastestPostResponse,
-  AuthenticatedResponse,
-} from "./login.types";
-import { ApplicationStore } from "../../services";
+import { ApplicationStore } from "../../services/applicationStore";
+import { ApplicationContext } from "../../context";
+import { User, LastestPost } from "../../models";
+
+export interface AuthenticatedResponse {
+  user: User;
+  token: string;
+}
+
+interface LastestPostResponse {
+  data: LastestPost[];
+}
 
 function Login() {
-  const navigation = useHistory();
+  const [lastestPost, setLastestPost] = useState<LastestPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [lastestPost, setLastestPost] = useState<LastestPostData[]>([]);
+
+  const { setUser } = useContext(ApplicationContext);
+
+  const navigation = useHistory();
 
   useEffect(() => {
     async function loadLastestPost() {
@@ -34,11 +43,14 @@ function Login() {
   async function singIn(githubCode: string) {
     setIsLoading(true);
 
-    const { data } = await api.post<AuthenticatedResponse>("/authenticate", {
+    const response = await api.post<AuthenticatedResponse>("/authenticate", {
       code: githubCode,
     });
 
-    ApplicationStore.saveToken({ key: Strings.token, token: data.token });
+    const { token, user } = response.data;
+
+    ApplicationStore.saveToken({ key: Strings.token, token: token });
+    setUser(user);
 
     setIsLoading(false);
     navigation.push(AppRoutes.home);

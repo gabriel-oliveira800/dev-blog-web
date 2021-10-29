@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: `${import.meta.env.VITE_BASE_API_URL}`,
 });
 
-export { api };
+const addTokenToHeader = (token: string) =>
+  (api.defaults.headers.common.authorization = `Bearer ${token}`);
+
+export { api, addTokenToHeader };

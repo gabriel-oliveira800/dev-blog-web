@@ -3,4 +3,34 @@
   min-height: 100vh;
 
   background-color: white;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  img {
+    width: 160px;
+    height: 160px;
+
+    border-radius: 50%;
+  }
+
+  button {
+    width: 180px;
+    height: 60px;
+
+    border: none;
+    text-decoration: none;
+
+    margin-top: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    color: #fff;
+    font-weight: 600;
+    font-size: 24px;
+
+    background-color: var(--yellow-color);
+  }
 }
