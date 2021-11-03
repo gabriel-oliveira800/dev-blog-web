@@ -1,8 +1,8 @@
-import { ApplicationProvider } from "./context";
+import { ApplicationProvider } from "./core/context";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { AuthGuard } from "./middleware/AuthGuard";
-import { AppRoutes } from "./values";
+import { AuthGuard } from "./core/middleware/AuthGuard";
+import { AppRoutes } from "./core/values";
 
 import { FeedbackActionsProvider } from "./features/components/FeedbackActions";
 

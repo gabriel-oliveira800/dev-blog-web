@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { ApplicationContext } from "../../context";
+import { ApplicationContext } from "../../core/context";
 import style from "./home.module.scss";
 
-import { ApplicationStore } from "../../services/applicationStore";
-import { addTokenToHeader } from "../../services/api";
-import { Strings, AppRoutes } from "../../values";
+import { ApplicationStore } from "../../core/services/applicationStore";
+import { addTokenToHeader } from "../../core/services/api";
+import { Strings, AppRoutes } from "../../core/values";
 
 function Home() {
   const { user } = useContext(ApplicationContext);

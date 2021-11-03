@@ -5,14 +5,14 @@ import { useAlert } from "react-alert";
 import style from "./login.module.scss";
 
 import { Logo, VscGithubInverted } from "../components/Icons";
-import { AppRoutes, Strings } from "../../values";
+import { AppRoutes, Strings } from "../../core/values";
 import { Loading } from "../components/Loading";
 import FadeIn from "react-fade-in/lib/FadeIn";
 
-import { ApplicationStore } from "../../services/applicationStore";
-import { ApplicationContext } from "../../context";
-import { User, LastestPost } from "../../models";
-import { api } from "../../services/api";
+import { ApplicationStore } from "../../core/services/applicationStore";
+import { ApplicationContext } from "../../core/context";
+import { User, LastestPost } from "../../core/models";
+import { api } from "../../core/services/api";
 
 export interface AuthenticatedResponse {
   user: User;

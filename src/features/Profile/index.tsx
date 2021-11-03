@@ -7,9 +7,9 @@ import {
   VscSettingsGear,
 } from "../components/Icons";
 
-import { ApplicationStore } from "../../services/applicationStore";
-import { addTokenToHeader } from "../../services/api";
-import { AppRoutes, Strings } from "../../values";
+import { ApplicationStore } from "../../core/services/applicationStore";
+import { addTokenToHeader } from "../../core/services/api";
+import { AppRoutes, Strings } from "../../core/values";
 import { useHistory } from "react-router-dom";
 
 function Profile() {
