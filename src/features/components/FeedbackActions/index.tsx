@@ -16,6 +16,7 @@ const defaultOptions = {
 export interface FeedbackActionsProviderProps {
   children: React.ReactNode;
   options?: AlertProviderProps;
+  component?: React.FC<AlertComponentProps>;
 }
 
 interface FeedbackActionComponentProps {
@@ -53,10 +54,13 @@ const FeedbackActionComponent = (props: AlertComponentProps) => {
 function FeedbackActionsProvider({
   children,
   options,
+  component,
 }: FeedbackActionsProviderProps) {
   const feedbackOptions = options !== undefined ? options : defaultOptions;
+  const feedbackTemplate =
+    component !== undefined ? component : FeedbackActionComponent;
   return (
-    <Provider {...feedbackOptions} template={FeedbackActionComponent}>
+    <Provider {...feedbackOptions} template={feedbackTemplate}>
       {children}
     </Provider>
   );

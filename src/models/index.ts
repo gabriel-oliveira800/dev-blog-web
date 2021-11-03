@@ -1,9 +1,11 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
   login: string;
-  github_id: number;
   avatar_url: string;
+  followers: number;
+  following: number;
+  public_repos: number;
 }
 
 export interface LastestPost {

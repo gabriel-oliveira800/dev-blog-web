@@ -1,0 +1,62 @@
+.profileWrapper {
+  width: 100%;
+  height: 100vh;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .leftSide {
+    width: 100%;
+    height: 100vh;
+
+    padding: 18px 40px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .contentSection {
+      width: 100%;
+      height: 100%;
+      max-width: 1200px;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      header {
+        width: 100%;
+        max-width: 1200px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .actionsButtons {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          div {
+            padding: 0 8px;
+          }
+
+          svg {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .backgroundSection {
+    width: 500px;
+    height: 100vh;
+
+    overflow: hidden;
+  }
+}

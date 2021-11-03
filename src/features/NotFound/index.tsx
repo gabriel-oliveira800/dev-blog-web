@@ -1,8 +1,8 @@
 import style from "./style.module.scss";
-
-import { Logo } from "../components/";
 import { Link } from "react-router-dom";
+
 import FadeIn from "react-fade-in/lib/FadeIn";
+import { Logo } from "../components/Icons";
 
 const NotFound = () => {
   return (

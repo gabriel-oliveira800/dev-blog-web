@@ -1,17 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useAlert } from "react-alert";
+
 import style from "./login.module.scss";
 
-import { VscGithubInverted } from "react-icons/vsc";
-import FadeIn from "react-fade-in/lib/FadeIn";
-
-import { api } from "../../services/api";
+import { Logo, VscGithubInverted } from "../components/Icons";
 import { AppRoutes, Strings } from "../../values";
-import { Logo, Loading } from "../components";
+import { Loading } from "../components/Loading";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 import { ApplicationStore } from "../../services/applicationStore";
 import { ApplicationContext } from "../../context";
 import { User, LastestPost } from "../../models";
+import { api } from "../../services/api";
 
 export interface AuthenticatedResponse {
   user: User;
@@ -29,6 +30,7 @@ function Login() {
   const { setUser } = useContext(ApplicationContext);
 
   const navigation = useHistory();
+  const alert = useAlert();
 
   useEffect(() => {
     async function loadLastestPost() {
@@ -43,17 +45,25 @@ function Login() {
   async function singIn(githubCode: string) {
     setIsLoading(true);
 
-    const response = await api.post<AuthenticatedResponse>("/authenticate", {
-      code: githubCode,
-    });
+    try {
+      const response = await api.post<AuthenticatedResponse>("/authenticate", {
+        code: githubCode,
+      });
 
-    const { token, user } = response.data;
+      const { token, user } = response.data;
 
-    ApplicationStore.saveToken({ key: Strings.token, token: token });
-    setUser(user);
+      setUser(user);
 
-    setIsLoading(false);
-    navigation.push(AppRoutes.home);
+      ApplicationStore.saveToken({ key: Strings.token, token: token });
+      navigation.push(AppRoutes.home);
+    } catch (_) {
+      alert.show({
+        type: "error",
+        message: "Erro na conmunição com GitHub, por favor tente novamente",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {

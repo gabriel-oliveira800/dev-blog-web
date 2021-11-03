@@ -4,12 +4,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { AuthGuard } from "./middleware/AuthGuard";
 import { AppRoutes } from "./values";
 
-import { FeedbackActionsProvider } from "./pages/components/FeedbackActions";
+import { FeedbackActionsProvider } from "./features/components/FeedbackActions";
 
-import { NotFound } from "./pages/NotFound/";
-import { Profile } from "./pages/Profile";
-import { Login } from "./pages/Login";
-import { Home } from "./pages/Home";
+import { NotFound } from "./features/NotFound";
+import { Profile } from "./features/Profile";
+import { Login } from "./features/Login";
+import { Home } from "./features/Home";
 
 const App = () => (
   <ApplicationProvider>
