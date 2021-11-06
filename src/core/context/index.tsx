@@ -23,8 +23,6 @@ function ApplicationProvider(prosp: ApplicationContextProps) {
     const reponse = await api.get<User>("/profile");
     const user = reponse.data;
 
-    console.log(user);
-
     setUser(user);
   }
 

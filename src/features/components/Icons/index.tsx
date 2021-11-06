@@ -1,5 +1,12 @@
 import React from "react";
-import { VscSignIn, VscSettingsGear, VscGithubInverted } from "react-icons/vsc";
+import {
+  VscSignIn,
+  VscSettingsGear,
+  VscGithubInverted,
+  VscAdd,
+} from "react-icons/vsc";
+
+import { IoChevronForwardOutline, IoAdd } from "react-icons/io5";
 
 interface IconsProps {
   className?: string;
@@ -850,4 +857,13 @@ const Background: React.FC<IconsProps> = ({
   </svg>
 );
 
-export { Logo, Background, VscSignIn, VscSettingsGear, VscGithubInverted };
+export {
+  Logo,
+  Background,
+  VscSignIn,
+  VscSettingsGear,
+  VscGithubInverted,
+  VscAdd,
+  IoChevronForwardOutline,
+  IoAdd,
+};
