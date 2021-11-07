@@ -2,26 +2,15 @@ import { useEffect, useState } from "react";
 import style from "./info.module.scss";
 
 import { VscGithubInverted } from "../../../components/Icons";
-import { User } from "../../../../core/models";
+import { Follows, User } from "../../../../core/models";
 import FadeIn from "react-fade-in";
-import { api } from "../../../../core/services/api";
 
 interface UserInfoProps {
   user?: User;
+  follows?: Follows[];
 }
 
-function UserInfo({ user }: UserInfoProps) {
-  const [follows, setFollows] = useState<User[] | undefined>(undefined);
-
-  useEffect(() => {
-    async function loadFollows() {
-      const response = await api.get<User[]>("/follows");
-      setFollows(response.data);
-    }
-
-    loadFollows();
-  }, []);
-
+function UserInfo({ user, follows }: UserInfoProps) {
   const randomBanner = () =>
     `https://source.unsplash.com/random?sig=${Math.random()}`;
 
@@ -66,19 +55,19 @@ function UserInfo({ user }: UserInfoProps) {
         <h1>Seguidores</h1>
 
         <ul className={style.followsList}>
-          {follows ? (
-            follows.map((user) => {
+          {follows && follows.length > 1 ? (
+            follows.map((follow) => {
               return (
-                <li key={user.id}>
+                <li key={follow.user.id}>
                   <div className={style.followAvatar}>
-                    <img src={user.avatar_url} alt={user.name} />
+                    <img src={follow.user.avatar_url} alt={follow.user.name} />
                   </div>
 
                   <div className={style.followUser}>
-                    <h4>{user?.name}</h4>
+                    <h4>{follow.user.name}</h4>
                     <div className={style.followRepoUser}>
                       <VscGithubInverted size={16} />
-                      {user?.login}
+                      {follow.user.login}
                     </div>
                   </div>
                 </li>

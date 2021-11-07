@@ -8,6 +8,11 @@ export interface User {
   public_repos: number;
 }
 
+export interface Follows {
+  user: User;
+  created_at: Date;
+}
+
 export interface LastestPost {
   id: number;
   name: string;
