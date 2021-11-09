@@ -76,7 +76,7 @@ function Login() {
 
       singIn(githubCode);
     }
-  });
+  }, []);
 
   return (
     <div className={style.contentWrapper}>

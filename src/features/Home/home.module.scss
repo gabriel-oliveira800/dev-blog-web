@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
 
-  background-color: white;
+  background-color: var(--gray4-color);
 
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@
     border-radius: 50%;
   }
 
-  button {
+  a {
     width: 180px;
     height: 60px;
 
@@ -28,8 +28,12 @@
     cursor: pointer;
 
     color: #fff;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     background-color: var(--yellow-color);
   }

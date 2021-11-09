@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { ApplicationContext } from "../../core/context";
 import style from "./home.module.scss";
@@ -25,7 +25,7 @@ function Home() {
       <h1>{user?.name}</h1>
       <h1>{user?.login}</h1>
       <img src={user?.avatar_url} alt={user?.name} />
-      <button onClick={handleLogout}>Sair</button>
+      <Link to={AppRoutes.profile}>Profile</Link>
     </main>
   );
 }
