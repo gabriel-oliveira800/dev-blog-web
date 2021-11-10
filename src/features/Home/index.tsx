@@ -1,23 +1,13 @@
 import { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ApplicationContext } from "../../core/context";
 import style from "./home.module.scss";
 
-import { ApplicationStore } from "../../core/services/applicationStore";
-import { addTokenToHeader } from "../../core/services/api";
-import { Strings, AppRoutes } from "../../core/values";
+import { AppRoutes } from "../../core/values";
 
 function Home() {
   const { user } = useContext(ApplicationContext);
-  const navigation = useHistory();
-
-  function handleLogout() {
-    ApplicationStore.removeToken(Strings.token);
-    addTokenToHeader("");
-
-    navigation.push(AppRoutes.login);
-  }
 
   return (
     <main className={style.homeWrapper}>

@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState, ReactNode } from "react";
 
 import { ApplicationStore } from "../services/applicationStore";
-import { api, addTokenToHeader } from "../services/api";
-import { Strings } from "../values";
+import { api } from "../services/api";
 import { User } from "../models";
 
 interface ApplicationState {
@@ -27,10 +26,7 @@ function ApplicationProvider(prosp: ApplicationContextProps) {
   }
 
   useEffect(() => {
-    const token = ApplicationStore.getToken(Strings.token);
-    addTokenToHeader(token ?? "");
-
-    if (token) {
+    if (ApplicationStore.setupToAddTokenInApiClientHeader()) {
       loadingUserInfo();
     }
   }, []);

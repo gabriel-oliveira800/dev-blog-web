@@ -50,11 +50,9 @@ function Login() {
         code: githubCode,
       });
 
-      const { token, user } = response.data;
+      setUser(response.data.user);
+      ApplicationStore.saveToken(response.data.token);
 
-      setUser(user);
-
-      ApplicationStore.saveToken({ key: Strings.token, token: token });
       navigation.push(AppRoutes.home);
     } catch (_) {
       alert.show({

@@ -10,8 +10,8 @@ import {
 } from "../components/Icons";
 
 import { ApplicationStore } from "../../core/services/applicationStore";
-import { addTokenToHeader, api } from "../../core/services/api";
 import { AppRoutes, Strings } from "../../core/values";
+import { api } from "../../core/services/api";
 
 import { UserInfo } from "./components/UserInfo/UserInfo";
 import { Repositories } from "./components/Repositories";
@@ -25,21 +25,19 @@ function Profile() {
   const { user } = useContext(ApplicationContext);
   const navigation = useHistory();
 
+  async function loadFollows() {
+    const response = await api.get<Follows[]>("/follows");
+    setFollows(response.data);
+  }
+
   useEffect(() => {
-    async function loadFollows() {
-      const response = await api.get<Follows[]>("/follows");
-      console.log(response.data);
-
-      setFollows(response.data);
+    if (ApplicationStore.setupToAddTokenInApiClientHeader()) {
+      loadFollows();
     }
-
-    loadFollows();
   }, []);
 
   function handleLogout() {
-    ApplicationStore.removeToken(Strings.token);
-    addTokenToHeader("");
-
+    ApplicationStore.handleLogout();
     navigation.push(AppRoutes.login);
   }
 
