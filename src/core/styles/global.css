@@ -22,6 +22,7 @@
   );
 
   --max-width-dimens: 1420px;
+  --max-header-size: 86px;
 }
 
 * {
