@@ -49,13 +49,17 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
+
         flex: none;
 
-        background-color: var(--gray4-color);
+        cursor: pointer;
         text-align: center;
+        background-color: var(--gray4-color);
 
         margin-right: 20px;
         border-radius: 28px;
+
+        transition: all 0.2s ease-in-out;
 
         h1 {
           font-weight: 500;
@@ -79,6 +83,11 @@
             margin-right: 8px;
           }
         }
+      }
+
+      .repoItem:hover {
+        height: 98%;
+        background-color: #29292e45;
       }
     }
 

@@ -20,6 +20,8 @@
     var(--pink-color) 0%,
     var(--yellow-color) 100%
   );
+
+  --max-width-dimens: 1420px;
 }
 
 * {
