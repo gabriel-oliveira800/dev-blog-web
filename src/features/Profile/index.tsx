@@ -10,19 +10,21 @@ import {
 } from "../components/Icons";
 
 import { ApplicationStore } from "../../core/services/applicationStore";
-import { AppRoutes, Strings } from "../../core/values";
+import { ApplicationContext } from "../../core/context";
+import { AppRoutes } from "../../core/values";
 import { api } from "../../core/services/api";
 
-import { UserInfo } from "./components/UserInfo/UserInfo";
 import { Repositories } from "./components/Repositories";
-import { ApplicationContext } from "../../core/context";
+import { UserInfo } from "./components/UserInfo/";
+import { Settings } from "./components/Setting";
 
-import { Follows } from "../../core/models";
+import { Follows, Role } from "../../core/models";
 
 function Profile() {
   const [follows, setFollows] = useState<Follows[]>();
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
-  const { user } = useContext(ApplicationContext);
+  const { user, setUser } = useContext(ApplicationContext);
   const navigation = useHistory();
 
   async function loadFollows() {
@@ -49,7 +51,7 @@ function Profile() {
             <Logo />
 
             <div className={style.actionsButtons}>
-              <div onClick={() => {}}>
+              <div onClick={() => setSettingsVisible(true)}>
                 <VscSettingsGear size="26" />
               </div>
               <div onClick={handleLogout}>
@@ -67,6 +69,13 @@ function Profile() {
       <div className={style.backgroundSection}>
         <Background />
       </div>
+
+      <Settings
+        updateUser={setUser}
+        isVisibled={settingsVisible}
+        isAdmin={user?.role == Role.ADMIN}
+        onClosed={() => setSettingsVisible(false)}
+      />
     </main>
   );
 }
