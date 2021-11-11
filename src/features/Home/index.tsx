@@ -1,21 +1,39 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-
-import { ApplicationContext } from "../../core/context";
+import { useContext, useEffect, useState } from "react";
 import style from "./home.module.scss";
 
+import { ApplicationContext } from "../../core/context";
+
+import { HomeHeader } from "./components/HomeHeader";
+import { useHistory } from "react-router-dom";
 import { AppRoutes } from "../../core/values";
 
 function Home() {
   const { user } = useContext(ApplicationContext);
 
+  const navigate = useHistory();
+  const [searchValue, setSearchValue] = useState<string | null>(null);
+
+  const handleNavigateToProfile = () => {
+    navigate.push(AppRoutes.profile);
+  };
+
+  const handlenavigateToCreateFeed = () => {
+    navigate.push(AppRoutes.createFeed);
+  };
+
+  useEffect(() => {
+    console.log("searchValue", searchValue);
+  }, [searchValue]);
+
   return (
     <main className={style.homeWrapper}>
-      <h1>Home Component</h1>
-      <h1>{user?.name}</h1>
-      <h1>{user?.login}</h1>
-      <img src={user?.avatar_url} alt={user?.name} />
-      <Link to={AppRoutes.profile}>Profile</Link>
+      <HomeHeader
+        avatar={user?.avatar_url}
+        navigateToProfile={handleNavigateToProfile}
+        navigateToCreateFeed={handlenavigateToCreateFeed}
+        onChanged={(e) => setSearchValue(e.target.value)}
+      />
+      <div></div>
     </main>
   );
 }

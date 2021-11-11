@@ -10,6 +10,7 @@ abstract class AppRoutes {
   static home = "/";
   static login = "/login";
   static profile = "/profile";
+  static createFeed = "/criar";
   static notFound = "*";
 }
 

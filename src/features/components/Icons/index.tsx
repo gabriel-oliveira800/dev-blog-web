@@ -4,6 +4,7 @@ import {
   VscSettingsGear,
   VscGithubInverted,
   VscAdd,
+  VscSearch,
 } from "react-icons/vsc";
 
 import { IoChevronForwardOutline, IoAdd } from "react-icons/io5";
@@ -866,4 +867,5 @@ export {
   VscAdd,
   IoChevronForwardOutline,
   IoAdd,
+  VscSearch,
 };

@@ -2,7 +2,7 @@ import { Strings } from "../values";
 import { api } from "./api";
 
 abstract class ApplicationStore {
-  // Could create a singleton from "api" to avoid calling this method multiple times
+  //TODO: Could create a singleton from "api" to avoid calling this method multiple times
   static setupToAddTokenInApiClientHeader(): boolean {
     const token = this.getToken();
     if (token === null) {
