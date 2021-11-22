@@ -55,7 +55,7 @@ function UserInfo({ user, follows }: UserInfoProps) {
         <h1>Seguidores</h1>
 
         <ul className={style.followsList}>
-          {follows ? (
+          {follows && follows.length > 0 ? (
             follows.map((follow) => {
               return (
                 <li key={follow.user.id}>

@@ -10,18 +10,9 @@ import { Loading } from "../components/Loading";
 import FadeIn from "react-fade-in/lib/FadeIn";
 
 import { ApplicationStore } from "../../core/services/applicationStore";
+import { LastestPost, AuthenticatedResponse } from "../../core/models";
 import { ApplicationContext } from "../../core/context";
-import { User, LastestPost } from "../../core/models";
 import { api } from "../../core/services/api";
-
-export interface AuthenticatedResponse {
-  user: User;
-  token: string;
-}
-
-interface LastestPostResponse {
-  data: LastestPost[];
-}
 
 function Login() {
   const [lastestPost, setLastestPost] = useState<LastestPost[]>([]);
@@ -34,9 +25,8 @@ function Login() {
 
   useEffect(() => {
     async function loadLastestPost() {
-      const response = await api.get<LastestPostResponse>("/post/latest");
-      const { data } = response.data;
-      setLastestPost(data);
+      const response = await api.get<LastestPost[]>("/feed/latest");
+      setLastestPost(response.data.slice(0, 3));
     }
 
     loadLastestPost();
@@ -88,9 +78,9 @@ function Login() {
                 <p className={style.messageContent}>{post.message}</p>
                 <div className={style.messageUser}>
                   <div className={style.userImage}>
-                    <img src={post.avatar_url} alt={post.name} />
+                    <img src={post.user.avatar_url} alt={post.user.name} />
                   </div>
-                  <span>{post.name}</span>
+                  <span>{post.user.name}</span>
                 </div>
               </FadeIn>
             );

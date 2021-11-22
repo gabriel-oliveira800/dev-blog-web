@@ -10,8 +10,8 @@ import {
 } from "../../../components/Icons";
 
 interface RepoData {
-  repoName: string;
   name: string;
+  repoName: string;
 }
 
 const projects: RepoData[] = [

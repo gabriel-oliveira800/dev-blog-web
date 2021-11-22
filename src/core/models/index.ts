@@ -1,3 +1,8 @@
+export interface AuthenticatedResponse {
+  user: User;
+  token: string;
+}
+
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN",
@@ -20,7 +25,9 @@ export interface Follows {
 
 export interface LastestPost {
   id: number;
-  name: string;
   message: string;
-  avatar_url: string;
+  user: {
+    name: string;
+    avatar_url: string;
+  };
 }
