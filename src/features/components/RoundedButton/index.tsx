@@ -33,7 +33,7 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
     style={{ width, height, fontSize, borderRadius, color, background }}
   >
     {isLoading ? (
-      <Loading />
+      <Loading color={color} />
     ) : (
       <>
         {children}

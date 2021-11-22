@@ -6,6 +6,7 @@ import { Helpers } from "../../../../core/helpers";
 const maxLengthImages = 8;
 
 export interface FilesPreview {
+  file: File;
   name: string;
   preview: string;
 }
@@ -26,6 +27,7 @@ function FeedImages({
   function handleCreatePreviewFile(file: File) {
     const previewURL = URL.createObjectURL(file);
     const newPreview = {
+      file: file,
       name: file.name,
       preview: previewURL,
     } as FilesPreview;
