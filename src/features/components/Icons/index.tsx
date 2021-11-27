@@ -8,6 +8,10 @@ import {
   VscClose,
 } from "react-icons/vsc";
 
+import { IoHeartOutline, IoHeart } from "react-icons/io5";
+import { MdThumbUp } from "react-icons/md";
+import { BiLike } from "react-icons/bi";
+
 import { IoChevronForwardOutline, IoAdd } from "react-icons/io5";
 
 interface IconsProps {
@@ -870,4 +874,8 @@ export {
   IoAdd,
   VscSearch,
   VscClose,
+  IoHeartOutline,
+  IoHeart,
+  BiLike,
+  MdThumbUp,
 };

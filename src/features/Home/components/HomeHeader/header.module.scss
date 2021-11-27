@@ -6,10 +6,13 @@
   top: 0;
 
   transition: all 0.2s ease-in-out;
+  background-color: var(--black3-color);
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  z-index: 10000;
 
   .homeHeaderContent {
     width: 100%;

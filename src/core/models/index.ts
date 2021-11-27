@@ -31,3 +31,13 @@ export interface LastestPost {
     avatar_url: string;
   };
 }
+
+export interface Feed {
+  id: number;
+  user: User;
+  userId: string;
+  message?: string;
+  created_at: Date;
+  images: string[];
+  isFullAccess: boolean;
+}

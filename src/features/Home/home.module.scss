@@ -1,14 +1,70 @@
 .homeWrapper {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 
   background-color: var(--black2-color);
   position: relative;
 
-  & > div {
-    width: 100%;
-    height: 1024px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-    padding-top: 80px;
+  .feedWrapper {
+    width: 100%;
+    min-height: 100vh;
+    max-width: var(--max-width-dimens);
+
+    padding: 0 20px 0;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+
+    .feedListWrapper {
+      width: 100%;
+      height: 100%;
+
+      padding-top: 120px;
+      padding-right: 40px;
+      padding-bottom: 20px;
+      border-right: 2px solid #29292e;
+    }
+
+    .feedListEmptyWrapper {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 44px;
+      font-family: "Baloo 2", cursive;
+
+      padding-top: 120px;
+      border-right: 2px solid #29292e;
+    }
+
+    .chatWrapper {
+      width: 100%;
+      height: 100%;
+
+      padding: 120px 40px 40px;
+    }
   }
+}
+
+.homeWrapperLoading {
+  width: 100%;
+  min-height: 100vh;
+
+  background-color: var(--black2-color);
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }

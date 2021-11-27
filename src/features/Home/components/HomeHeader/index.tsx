@@ -18,21 +18,16 @@ function HomeHeader({
   navigateToCreateFeed,
   onChanged,
 }: HomeHeaderProps) {
-  const [isScrolling, setIsScrolling] = useState<boolean>(false);
-  const backgroundColor = isScrolling ? "--black3-color" : "--black2-color";
+  // const [isScrolling, setIsScrolling] = useState<boolean>(false);
+  // const handleCheckScrollEvent = () => setIsScrolling(window.scrollY >= 10);
 
-  const handleCheckScrollEvent = () => setIsScrolling(window.scrollY >= 10);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleCheckScrollEvent);
-    return () => window.removeEventListener("scroll", handleCheckScrollEvent);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleCheckScrollEvent);
+  //   return () => window.removeEventListener("scroll", handleCheckScrollEvent);
+  // }, []);
 
   return (
-    <header
-      className={style.homeHeaderWrapper}
-      style={{ backgroundColor: `var(${backgroundColor})` }}
-    >
+    <header className={style.homeHeaderWrapper}>
       <section className={style.homeHeaderContent}>
         <div className={style.contentLeftSide}>
           <Logo />

@@ -5,28 +5,28 @@ import "swiper/css/scrollbar";
 import "swiper/css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Scrollbar, Mousewheel } from "swiper";
+import SwiperCore, { Scrollbar } from "swiper";
 
-SwiperCore.use([Scrollbar, Mousewheel]);
+SwiperCore.use([Scrollbar]);
 
 interface CarroselProps extends HTMLAttributes<HTMLDivElement> {
   preview: string[];
+  formatUrl: (img: string) => string;
 }
 
-function Carrosel({ preview, ...rest }: CarroselProps) {
+function Carrosel({ preview, formatUrl, ...rest }: CarroselProps) {
   const [step, setStep] = useState<number>(0);
 
   return (
     <div {...rest} className={style.carroselWrapper}>
       <Swiper
-        mousewheel={true}
         className={style.carroselContent}
         onSlideChange={(swiper) => setStep(swiper.activeIndex)}
       >
         {preview.map((image, index) => {
           return (
             <SwiperSlide key={index} className={style.carroselItem}>
-              <img src={image} alt={`Feed ${index}`} />
+              <img src={formatUrl(image)} alt={`Feed ${index}`} />
             </SwiperSlide>
           );
         })}

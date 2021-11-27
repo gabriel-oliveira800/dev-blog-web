@@ -11,12 +11,18 @@ abstract class Helpers {
     return array[array.length - 1];
   }
 
-  static isEmpty<T>(array: T[] | string): boolean {
+  static isEmpty<T>(array: T[] | string | null | undefined): boolean {
+    if (array === null || array === undefined) return true;
     return array.length === 0;
   }
 
   static isNotEmpty<T>(array: T[] | string): boolean {
     return !this.isEmpty(array);
+  }
+
+  static formatUrl(img: string): string {
+    const apiUrl = `${import.meta.env.VITE_BASE_API_URL}`;
+    return `${apiUrl}/${img}`;
   }
 }
 
