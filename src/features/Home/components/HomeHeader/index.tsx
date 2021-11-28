@@ -18,14 +18,6 @@ function HomeHeader({
   navigateToCreateFeed,
   onChanged,
 }: HomeHeaderProps) {
-  // const [isScrolling, setIsScrolling] = useState<boolean>(false);
-  // const handleCheckScrollEvent = () => setIsScrolling(window.scrollY >= 10);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleCheckScrollEvent);
-  //   return () => window.removeEventListener("scroll", handleCheckScrollEvent);
-  // }, []);
-
   return (
     <header className={style.homeHeaderWrapper}>
       <section className={style.homeHeaderContent}>

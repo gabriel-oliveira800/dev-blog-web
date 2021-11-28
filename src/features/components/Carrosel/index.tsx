@@ -32,20 +32,22 @@ function Carrosel({ preview, formatUrl, ...rest }: CarroselProps) {
         })}
       </Swiper>
 
-      <ul className={style.carroselSteps}>
-        {preview.map((_image, index) => {
-          return (
-            <li
-              key={index}
-              className={
-                index === step
-                  ? style.carroselStepItem
-                  : style.carroselStepItemDisabled
-              }
-            ></li>
-          );
-        })}
-      </ul>
+      {preview.length > 1 && (
+        <ul className={style.carroselSteps}>
+          {preview.map((_image, index) => {
+            return (
+              <li
+                key={index}
+                className={
+                  index === step
+                    ? style.carroselStepItem
+                    : style.carroselStepItemDisabled
+                }
+              ></li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

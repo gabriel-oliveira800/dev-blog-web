@@ -2,10 +2,11 @@ import { createContext, useEffect, useState, ReactNode } from "react";
 
 import { ApplicationStore } from "../services/applicationStore";
 import { api } from "../services/api";
-import { User } from "../models";
+import { Role, User } from "../models";
 
 interface ApplicationState {
   user?: User;
+  fechUser: () => void;
   setUser: (user: User) => void;
 }
 
@@ -20,19 +21,23 @@ function ApplicationProvider(prosp: ApplicationContextProps) {
 
   async function loadingUserInfo() {
     const reponse = await api.get<User>("/profile");
-    const user = reponse.data;
+    const data = reponse.data;
 
-    setUser(user);
+    setUser(data);
   }
 
-  useEffect(() => {
+  async function fechUser() {
     if (ApplicationStore.setupToAddTokenInApiClientHeader()) {
       loadingUserInfo();
     }
+  }
+
+  useEffect(() => {
+    fechUser();
   }, []);
 
   return (
-    <ApplicationContext.Provider value={{ user, setUser }}>
+    <ApplicationContext.Provider value={{ user, setUser, fechUser }}>
       {prosp.children}
     </ApplicationContext.Provider>
   );

@@ -8,7 +8,7 @@ export enum Role {
   ADMIN = "ADMIN",
 }
 export interface User {
-  id: number;
+  id: string;
   role: Role;
   name: string;
   login: string;
@@ -32,9 +32,16 @@ export interface LastestPost {
   };
 }
 
+export interface Like {
+  id: string;
+  userId: string;
+  postId: string;
+  created_at: Date;
+}
 export interface Feed {
-  id: number;
+  id: string;
   user: User;
+  Like: Like[];
   userId: string;
   message?: string;
   created_at: Date;

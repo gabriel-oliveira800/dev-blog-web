@@ -1,26 +1,56 @@
 import { useContext, useEffect, useState } from "react";
 import style from "./home.module.scss";
 
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useAlert } from "react-alert";
+
 import { ApplicationContext } from "../../core/context";
 import { Feed } from "../../core/models";
-
 import { useHistory } from "react-router-dom";
 import { AppRoutes } from "../../core/values";
 
 import { HomeHeader } from "./components/HomeHeader";
 import { FeedItem } from "./components/FeedItem";
+import { Loading } from "../components/Loading";
 import { api } from "../../core/services/api";
 import { Helpers } from "../../core/helpers";
-import { Loading } from "../components/Loading";
 
 function Home() {
   const [feeds, setFeeds] = useState<Feed[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
-
-  const { user } = useContext(ApplicationContext);
-
-  const navigate = useHistory();
+  const [_cachedFeedList, _setCachedFeedList] = useState<Feed[]>([]);
   const [searchValue, setSearchValue] = useState<string | null>(null);
+
+  const { user, fechUser } = useContext(ApplicationContext);
+  const navigate = useHistory();
+  const alert = useAlert();
+
+  const handleSearch = () => {
+    if (Helpers.isNotEmpty(searchValue)) {
+      setFeeds(Helpers.searchByName(feeds, searchValue!));
+    } else {
+      setFeeds(_cachedFeedList);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue]);
+
+  useEffect(() => {
+    fechUser();
+    getAllFeeds();
+  }, []);
+
+  async function getAllFeeds() {
+    setLoading(true);
+
+    const response = await api.get<Feed[]>("/feeds");
+    _setCachedFeedList(response.data);
+    setFeeds(response.data);
+
+    setLoading(false);
+  }
 
   const handleNavigateToProfile = () => {
     navigate.push(AppRoutes.profile);
@@ -30,24 +60,26 @@ function Home() {
     navigate.push(AppRoutes.createFeed);
   };
 
-  useEffect(() => {
-    console.log("searchValue", searchValue);
-  }, [searchValue]);
+  const handleShowError = (message: string) => {
+    alert.show({ type: "error", message: message });
+  };
 
-  useEffect(() => {
-    async function getAllFeeds() {
-      setLoading(true);
+  async function handleDeleteFeed(id: string, endPoint: string) {
+    try {
+      await api.delete(endPoint);
 
-      const response = await api.get<Feed[]>("/feeds");
-      setFeeds(response.data);
+      const copy = feeds;
+      const index = copy.findIndex((feed) => feed.id === id);
+      copy.splice(index, 1);
 
-      console.log(response.data);
+      setFeeds([...copy]);
+      _setCachedFeedList([...copy]);
+    } catch (error) {
+      console.log(error);
 
-      setLoading(false);
+      handleShowError("Erro, ao deletar esse feed, por favor tente novamente");
     }
-
-    getAllFeeds();
-  }, []);
+  }
 
   return (
     <main className={style.homeWrapper}>
@@ -66,15 +98,25 @@ function Home() {
         <section className={style.feedWrapper}>
           {Helpers.isEmpty(feeds) ? (
             <div className={style.feedListEmptyWrapper}>
-              Comece agora, há ajudar outros desenvolvedores com suas
-              experiências
+              Não foi enontrado nenhum resultado
             </div>
           ) : (
-            <ul className={style.feedListWrapper}>
+            <InfiniteScroll
+              hasMore={false}
+              next={() => {}}
+              loader={<Loading />}
+              dataLength={feeds.length}
+              className={style.feedListWrapper}
+            >
               {feeds.map((feed) => (
-                <FeedItem key={feed.id} feed={feed} />
+                <FeedItem
+                  key={feed.id}
+                  feed={feed}
+                  currentUser={user!}
+                  deleteFeed={handleDeleteFeed}
+                />
               ))}
-            </ul>
+            </InfiniteScroll>
           )}
 
           <div className={style.chatWrapper}>

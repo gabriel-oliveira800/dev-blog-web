@@ -114,6 +114,10 @@
       span {
         margin-left: 12px;
       }
+
+      &:hover svg {
+        transform: scale(1.4);
+      }
     }
   }
 }
