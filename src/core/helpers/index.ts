@@ -50,11 +50,11 @@ abstract class Helpers {
     return isLiked.length > 0;
   }
 
-  static countLikes(likes: Like[]): string {
-    if (this.isEmpty(likes)) return "";
+  static countLikes(likes: number): string {
+    if (likes === 0) return "";
 
-    if (likes.length == 0) return "1 Like";
-    return `${likes.length} Likes`;
+    if (likes === 1) return "1 Like";
+    return `${likes} Likes`;
   }
 }
 

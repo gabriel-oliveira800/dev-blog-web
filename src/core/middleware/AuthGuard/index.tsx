@@ -7,7 +7,7 @@ import { AppRoutes, Strings } from "../../values";
 interface AuthGuardProps extends RouteProps {}
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ location, ...rest }) => {
-  const isAuthenticated = ApplicationStore.isAuthenticated(Strings.token);
+  const isAuthenticated = ApplicationStore.isAuthenticated();
 
   if (!isAuthenticated) {
     return (

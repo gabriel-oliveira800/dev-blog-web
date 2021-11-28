@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import style from "./feed.module.scss";
 
 import {
-  IoHeart,
   MdThumbUp,
   BiLike,
+  IoHeart,
   IoHeartOutline,
 } from "../../../components/Icons";
 
@@ -14,22 +14,33 @@ import { VscClose } from "../../../components/Icons";
 
 import { Helpers } from "../../../../core/helpers";
 import { Feed, User } from "../../../../core/models";
+import { FavoritesService } from "../../../../core/services/favorites_service";
 
 interface FeedItemProps {
   feed: Feed;
   currentUser: User;
   // setLike: (feed: Feed) => void;
   // saveFeed: (feed: Feed) => void;
+  updateLike: (id: string) => void;
   deleteFeed: (id: string, endPoint: string) => void;
 }
 
-function FeedItem({ feed, currentUser, deleteFeed }: FeedItemProps) {
-  const [liked, setLiked] = useState(false);
-  const [canDeleteFeed, setCanDeleteFeed] = useState(false);
+function FeedItem({
+  feed,
+  currentUser,
+  deleteFeed,
+  updateLike,
+}: FeedItemProps) {
+  const [likes, setLikes] = useState<number>(0);
+  const [isFavorite, setisFavorite] = useState<boolean>(false);
+  const [canDeleteFeed, setCanDeleteFeed] = useState<boolean>(false);
 
   useEffect(() => {
+    setLikes(feed.Like.length);
+    setisFavorite(FavoritesService.isFavorite(feed));
     setCanDeleteFeed(Helpers.canDeleteFeed(feed, currentUser));
-    setLiked(Helpers.isLiked(feed.Like, currentUser.id));
+
+    console.log(FavoritesService.isFavorite(feed));
   }, [feed]);
 
   const handleDleeteFeed = () => {
@@ -38,6 +49,16 @@ function FeedItem({ feed, currentUser, deleteFeed }: FeedItemProps) {
     } else {
       deleteFeed(feed.id, `/admin/feed/${feed.userId}/${feed.id}`);
     }
+  };
+
+  const handleUpdateLike = () => {
+    setLikes(likes + 1);
+    updateLike(feed.id);
+  };
+
+  const handleSaveFeed = () => {
+    FavoritesService.saveFavorites(feed);
+    setisFavorite(FavoritesService.isFavorite(feed));
   };
 
   return (
@@ -77,16 +98,26 @@ function FeedItem({ feed, currentUser, deleteFeed }: FeedItemProps) {
       <div className={style.divider}></div>
 
       <div className={style.footerWrapper}>
-        <div className={style.footerButton}>
-          {liked ? (
+        <div className={style.footerButton} onClick={handleUpdateLike}>
+          {likes > 0 ? (
             <MdThumbUp size={30} color="var(--yellow-color)" />
           ) : (
             <BiLike size={30} />
           )}
-          <span>{Helpers.countLikes(feed.Like)}</span>
+          <span>{Helpers.countLikes(likes)}</span>
         </div>
-        <div className={style.footerButton}>
-          <IoHeartOutline size={30} /> <span>Salvar</span>
+        <div className={style.footerButton} onClick={handleSaveFeed}>
+          {isFavorite ? (
+            <>
+              <IoHeart size={30} color="var(--yellow-color)" />
+              <span>Remover</span>
+            </>
+          ) : (
+            <>
+              <IoHeartOutline size={30} />
+              <span>Salvar</span>
+            </>
+          )}
         </div>
       </div>
     </div>

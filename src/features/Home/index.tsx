@@ -45,11 +45,15 @@ function Home() {
   async function getAllFeeds() {
     setLoading(true);
 
-    const response = await api.get<Feed[]>("/feeds");
-    _setCachedFeedList(response.data);
-    setFeeds(response.data);
-
-    setLoading(false);
+    try {
+      const response = await api.get<Feed[]>("/feeds");
+      _setCachedFeedList(response.data);
+      setFeeds(response.data);
+    } catch (error) {
+      handleShowError("Erro, ao carregar o feed, por favor tente novamente");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const handleNavigateToProfile = () => {
@@ -75,10 +79,14 @@ function Home() {
       setFeeds([...copy]);
       _setCachedFeedList([...copy]);
     } catch (error) {
-      console.log(error);
-
       handleShowError("Erro, ao deletar esse feed, por favor tente novamente");
     }
+  }
+
+  async function handleUpdateFeedLikes(id: string) {
+    try {
+      await api.post(`/like/${id}`);
+    } catch (_error) {}
   }
 
   return (
@@ -114,6 +122,7 @@ function Home() {
                   feed={feed}
                   currentUser={user!}
                   deleteFeed={handleDeleteFeed}
+                  updateLike={handleUpdateFeedLikes}
                 />
               ))}
             </InfiniteScroll>

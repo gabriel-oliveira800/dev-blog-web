@@ -27,7 +27,7 @@ abstract class ApplicationStore {
     return localStorage.getItem(Strings.token);
   }
 
-  static isAuthenticated(key: string): boolean {
+  static isAuthenticated(): boolean {
     const token = this.getToken();
     return token !== null;
   }
