@@ -39,8 +39,6 @@ function FeedItem({
     setLikes(feed.Like.length);
     setisFavorite(FavoritesService.isFavorite(feed));
     setCanDeleteFeed(Helpers.canDeleteFeed(feed, currentUser));
-
-    console.log(FavoritesService.isFavorite(feed));
   }, [feed]);
 
   const handleDleeteFeed = () => {

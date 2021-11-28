@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useAlert } from "react-alert";
 
 import { ApplicationContext } from "../../core/context";
-import { Feed } from "../../core/models";
+import { Feed, FeedResponse } from "../../core/models";
 import { useHistory } from "react-router-dom";
 import { AppRoutes } from "../../core/values";
 
@@ -16,6 +16,9 @@ import { api } from "../../core/services/api";
 import { Helpers } from "../../core/helpers";
 
 function Home() {
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
   const [feeds, setFeeds] = useState<Feed[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [_cachedFeedList, _setCachedFeedList] = useState<Feed[]>([]);
@@ -24,18 +27,6 @@ function Home() {
   const { user, fechUser } = useContext(ApplicationContext);
   const navigate = useHistory();
   const alert = useAlert();
-
-  const handleSearch = () => {
-    if (Helpers.isNotEmpty(searchValue)) {
-      setFeeds(Helpers.searchByName(feeds, searchValue!));
-    } else {
-      setFeeds(_cachedFeedList);
-    }
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, [searchValue]);
 
   useEffect(() => {
     fechUser();
@@ -46,15 +37,55 @@ function Home() {
     setLoading(true);
 
     try {
-      const response = await api.get<Feed[]>("/feeds");
-      _setCachedFeedList(response.data);
-      setFeeds(response.data);
+      const response = await api.get<FeedResponse>("/feeds", {
+        params: { page },
+      });
+
+      const { feeds, total } = response.data;
+
+      setFeeds(feeds);
+      setTotalPage(total);
+      _setCachedFeedList(feeds);
     } catch (error) {
       handleShowError("Erro, ao carregar o feed, por favor tente novamente");
     } finally {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (page !== 1) {
+      loadMoreFeeds();
+    }
+  }, [page]);
+
+  async function loadMoreFeeds() {
+    try {
+      const response = await api.get<FeedResponse>("/feeds", {
+        params: { page },
+      });
+
+      const { total } = response.data;
+
+      setTotalPage(total);
+      const updatedList = [..._cachedFeedList, ...response.data.feeds];
+
+      setFeeds(updatedList);
+      _setCachedFeedList(updatedList);
+    } catch (_) {}
+  }
+
+  useEffect(() => {
+    const handleSearch = () => {
+      if (Helpers.isNotEmpty(searchValue)) {
+        setFeeds(Helpers.searchByName(feeds, searchValue!));
+      } else {
+        setFeeds(_cachedFeedList);
+      }
+    };
+
+    handleSearch();
+  }, [searchValue]);
 
   const handleNavigateToProfile = () => {
     navigate.push(AppRoutes.profile);
@@ -86,8 +117,10 @@ function Home() {
   async function handleUpdateFeedLikes(id: string) {
     try {
       await api.post(`/like/${id}`);
-    } catch (_error) {}
+    } catch (_) {}
   }
+
+  const handleChangePage = () => setPage(page + 1);
 
   return (
     <main className={style.homeWrapper}>
@@ -110,10 +143,10 @@ function Home() {
             </div>
           ) : (
             <InfiniteScroll
-              hasMore={false}
-              next={() => {}}
               loader={<Loading />}
+              next={handleChangePage}
               dataLength={feeds.length}
+              hasMore={page <= totalPage}
               className={style.feedListWrapper}
             >
               {feeds.map((feed) => (

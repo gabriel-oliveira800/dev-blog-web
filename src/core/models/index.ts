@@ -48,3 +48,13 @@ export interface Feed {
   images: string[];
   isFullAccess: boolean;
 }
+
+export interface FeedPaginate {
+  page: number;
+  limit: number;
+}
+
+export interface FeedResponse {
+  total: number;
+  feeds: Feed[];
+}
