@@ -26,11 +26,7 @@ os requisitos da atividade, então criei um pequeno blog jutamente com uma [ApiR
 # Site
 
 <p float="left">
-  <video width="100%" controls>
-    <source src="screenshots/demo.webm" type="video/webm">
-    Your browser does not support the video tag.
-  </video>
-
+  <img src="screenshots/demo.gif" width="100%">
   <img src="screenshots/demo_01.png" width="100%">
   <img src="screenshots/demo_02.png" width="100%">
   <img src="screenshots/demo_03.png" width="100%">
